@@ -1,2 +1,2 @@
-# specialization-Deeplearning.ai-couresea
+# specialization-Deeplearning.ai-couresra
 Deep learning course 
