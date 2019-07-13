@@ -1,0 +1,80 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Convolutional Neural Networks: Application\n",
+    "\n",
+    "Welcome to Course 4's second assignment! In this notebook, you will:\n",
+    "\n",
+    "- Implement helper functions that you will use when implementing a TensorFlow model\n",
+    "- Implement a fully functioning ConvNet using TensorFlow \n",
+    "\n",
+    "**After this assignment you will be able to:**\n",
+    "\n",
+    "- Build and train a ConvNet in TensorFlow for a classification problem \n",
+    "\n",
+    "We assume here that you are already familiar with TensorFlow. If you are not, please refer the *TensorFlow Tutorial* of the third week of Course 2 (\"*Improving deep neural networks*\")."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1.0 - TensorFlow model\n",
+    "\n",
+    "In the previous assignment, you built helper functions using numpy to understand the mechanics behind convolutional neural networks. Most practical applications of deep learning today are built using programming frameworks, which have many built-in functions you can simply call. \n",
+    "\n",
+    "As usual, we will start by loading in the packages. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import math\n",
+    "import numpy as np\n",
+    "import h5py\n",
+    "import matplotlib.pyplot as plt\n",
+    "import scipy\n",
+    "from PIL import Image\n",
+    "from scipy import ndimage\n",
+    "import tensorflow as tf\n",
+    "from tensorflow.python.framework import ops\n",
+    "from cnn_utils import *\n",
+    "\n",
+    "%matplotlib inline\n",
+    "np.random.seed(1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Run the next cell to load the \"SIGNS\" dataset you are going to use."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Loading the data (signs)\n",
+    "X_train_orig, Y_train_orig, X_test_orig, Y_test_orig, classes = load_dataset()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As a reminder, the SIGNS dataset is a collection of 6 signs representing numbers from 0 to 5.\n",
+    "\n",
+    "<img src=\
